@@ -1,0 +1,11 @@
+using System;
+
+namespace FlexComm.ROS.Messages.geometry_msgs
+{
+    [Serializable]
+    public class AccelStamped
+    {
+        public std_msgs.Header header;
+        public Accel accel;
+    }
+}
