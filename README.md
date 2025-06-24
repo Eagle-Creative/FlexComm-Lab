@@ -1,112 +1,116 @@
 # FlexComm-Lab
 
-**FlexComm-Lab** is the official open-source companion toolkit to the [FlexComm Communication Framework for Unity](https://assetstore.unity.com/packages/tools/network/flexcomm-communication-framework-for-unity-XXXXX). It provides standalone tools, protocol simulators, and integration examples to support development, testing, and debugging of communication pipelines outside the Unity environment.
+**Community Extensions & Experimental Modules for FlexComm**
+
+**FlexComm-Lab** is the official community and R&D repository for [FlexComm](https://www.eagle-creative.com/flexcomm), a modular, protocol-agnostic communication framework for Unity. This lab serves as a sandbox for:
+
+- Experimental features not yet included in the core asset
+- Advanced integrations (e.g., ROS, ROS2)
+- Simple remote server scripts for testing your application
+- An official FAQ and wiki for FlexComm!
+
+> 🧠 FlexComm is the spiritual successor to **DTStacks**, a peer-reviewed MQTT framework presented at APMS 2024 ([DOI: 10.1016/j.procir.2024.10.165](https://doi.org/10.1016/j.procir.2024.10.165)). It’s already used in several academic and industrial XR/robotics systems.
 
 ---
 
-## 🔍 What is FlexComm-Lab?
+## ✅ What is FlexComm?
 
-FlexComm-Lab is designed to accelerate the development and validation of applications that use FlexComm for external device and service integration. It enables you to prototype and test MQTT, REST, UDP, TCP, and Serial communication independently—before integrating into Unity.
+FlexComm is a cross-platform, extensible communication layer for Unity that unifies external device and service integration using a single message format (`FlexMessage`). It supports the following protocols:
 
-Whether you're building robotics systems, digital twins, industrial interfaces, or academic prototypes, FlexComm-Lab helps you streamline your communication pipeline and verify data exchange logic in isolation.
+- ✅ **MQTT**
+- ✅ **TCP / UDP** (with framing, queuing, chunking)
+- ✅ **REST** (GET/POST-compatible with topic-target routing)
+- ✅ **WebSockets** (cross-platform)
+- ✅ **Serial / COM** (UWP, Windows)
+- 🔜 **WebRTC** and more
 
----
+All protocols implement a shared `ICommProtocol` interface and are fully interchangeable at runtime using the central `FlexClient`.
 
-## ✨ Features
-
-- ✅ **Standalone MQTT client** (supports v3.1.1 and v5.0)
-- ✅ **UDP and TCP simulators** with test message broadcasting
-- ✅ **REST test endpoints and client scripts**
-- ✅ **Serial port tester** for COM communication (Windows/Linux/macOS)
-- ✅ **Message validation and logging tools**
-- ✅ **Example JSON schemas and data payloads**
-- ✅ **Cross-platform Python and C# utilities**
-- ✅ **Compatible with FlexComm’s internal message format (`FlexMessage`)**
+Learn more at: [www.eagle-creative.com/flexcomm](https://www.eagle-creative.com/flexcomm)
 
 ---
 
-## 📁 Repository Structure
+## 🧪 Repository Structure
 
-```
-FlexComm-Lab/
-│
-├── mqtt/                 # MQTT test clients and brokers
-├── udp_tcp/              # UDP/TCP message simulators and listeners
-├── rest/                 # Flask-based REST API simulator
-├── serial/               # Serial communication scripts
-├── messages/             # Example payloads and schema validators
-├── tools/                # Miscellaneous helpers and CLI tools
-└── docs/                 # Diagrams and integration examples
-```
+| Folder            | Description                                                                 |
+|-------------------|-----------------------------------------------------------------------------|
+| `rest_server/`        | Minimal REST server for testing the REST protocol option of the FlexClient |
+| `websocket_server/`      | Minimal websocketserver for testing websocket communication             |
+| `serial_demo/`    | minimal Arduino script which emulates a sensor.        |
+| `ROS/`            | experimental ROS extension for Unity as well as ROS2 extensions for MQTT       |
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Getting Started / How to Use
 
-### Requirements
+> 💡 **You must first import the official FlexComm package from the Unity Asset Store or from Eagle Creative before using this lab repository.**
 
-- Python 3.8+ (for REST and Serial tools)
-- .NET Core / .NET Framework (for C# utilities)
-- MQTT broker (e.g., [Mosquitto](https://mosquitto.org/download/)) for testing
-- Unity project using [FlexComm](https://assetstore.unity.com/packages/tools/network/flexcomm-communication-framework-for-unity-XXXXX) (optional)
+### 1. Clone or Download
 
-### Example: Start the REST test server
-
+Clone this repository.  
 ```bash
-cd rest
-pip install -r requirements.txt
-python app.py
+git clone https://github.com/Eagle-Creative/FlexComm-Lab.git
 ```
 
-### Example: Send a test MQTT message
-
-```bash
-cd mqtt
-python publish.py --topic test/topic --payload "{ \"message\": \"Hello from Lab\" }"
-```
+Or download it as a ZIP and extract it.
 
 ---
 
-## 🧪 Use Cases
+### 2. Install FlexComm Core
 
-- ✅ Test FlexComm integration without launching Unity
-- ✅ Simulate robot commands, sensor data, or REST API responses
-- ✅ Debug message payloads, QoS, retained flags, and topic routing
-- ✅ Validate serial devices and baud rate configurations
-- ✅ Use as a foundation for integrating new protocols into FlexComm
+FlexComm-Lab depends on the core `FlexClient`, `FlexMessage`, and protocol managers from the [FlexComm main package](https://www.eagle-creative.com/flexcomm). Import the package via Unity Asset Store or direct `.unitypackage`.
 
 ---
 
-## 📚 Documentation
+### 3. Explore servers
 
-See the [`docs/`](docs/) folder for:
-- Architecture diagrams
-- Protocol-specific guides
-- Setup instructions for MQTT brokers and serial drivers
-- JSON schema format for `FlexMessage`
+Check the `xxx_server/` folders for to start a remote python server for testing your unity application.
+All server are minimal and essentially just print out and loop back the received message. You can adapt the ports in the settings to your liking
 
----
-
-## 🧠 Background
-
-FlexComm-Lab is developed and maintained by [Eagle Creative](https://www.eagle-creative.com) to support [FlexComm](https://assetstore.unity.com/packages/tools/network/flexcomm-communication-framework-for-unity-XXXXX), a protocol-agnostic communication framework for Unity. FlexComm is the spiritual successor to the peer-reviewed [DTStacks](https://doi.org/10.1016/j.procir.2024.10.165) framework and has been used in multiple academic and industrial projects.
+Simply start a server (installation instructions are in the scripts), setup a flexclient and see if everything works!
 
 ---
 
-## 📄 License
+### 4. ROS 
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This folder is fully dedicated to a ROS / ROS2 extension for FlexComm in Unity and a bridge module for ROS.
+This means that the folder contains all commonly used ROS messages as C# classes. The class itself can be used with JSON overrides.
+Please note that in ROS all incoming messages have to be exactly identical for it to work!
+
+---
+
+### 5. Contribute or Extend
+
+Want to create your own handler or protocol?  
+--> AWESOME! 
+Just have a look at how the integration works in unity, follow the interface structures and you are good to go!
+
+If you have questions or troubles, please contact Eagle Creative directly!
+
+Then register your new handler with your `FlexClient` or use UnityEvents to subscribe directly.
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Feel free to submit issues, feature requests, or pull requests.
+We welcome PRs that add value to the ecosystem:
+
+- Custom `FlexHandler` components
+- Protocol extensions (e.g., CAN bus, Bluetooth)
+- Diagnostic tools or GUI helpers
+- Robot or digital twin integrations (e.g., MoveIt, ROS2Bridge)
+
+Each contribution should ideally include:
+
+- Clear usage comments
+- Test scene (if applicable)
+- License/credit if reusing external work
 
 ---
 
-## 📬 Contact
+## 📄 License
 
-For support or collaboration inquiries, contact:  
-📧 info@eagle-creative.com  
-🌐 https://www.eagle-creative.com
+This repository is provided under the same terms as the FlexComm base package, unless stated otherwise.  
+By contributing, you agree to follow the [Eagle Creative Contributor Guidelines](https://www.eagle-creative.com/contribute) (coming soon).
+
+© 2025 Eagle Creative. All rights reserved.
