@@ -7,7 +7,7 @@
 - Experimental features not yet included in the core asset
 - Advanced integrations (e.g., ROS, ROS2)
 - Simple remote server scripts for testing your application
-- An official FAQ and wiki for FlexComm!
+- An official FAQ and Wiki for FlexComm!
 
 > 🧠 FlexComm is the spiritual successor to **DTStacks**, a peer-reviewed MQTT framework presented at APMS 2024 ([DOI: 10.1016/j.procir.2024.10.165](https://doi.org/10.1016/j.procir.2024.10.165)). It’s already used in several academic and industrial XR/robotics systems.
 
